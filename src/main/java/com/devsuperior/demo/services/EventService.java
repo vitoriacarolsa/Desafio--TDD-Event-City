@@ -21,18 +21,13 @@ public class EventService {
     CityRepository cityRepository;
 
     @Transactional
-    public EventDTO update(Long id, EventDTO dto, Long cityId) {
+    public EventDTO update(Long id, EventDTO dto) {
         try {
             Event entity = eventRepository.getReferenceById(id);
             entity.setName(dto.getName());
             entity.setDate(dto.getDate());
             entity.setUrl(dto.getUrl());
-
-            if (cityId != null) {
-                City city = cityRepository.findById(cityId)
-                        .orElseThrow(() -> new ResourceNotFoundException("City not found with id: " + cityId));
-                entity.setCity(city);
-            }
+            entity.setCity(new City(dto.getCityId(), null));
 
             entity = eventRepository.save(entity);
             return new EventDTO(entity);

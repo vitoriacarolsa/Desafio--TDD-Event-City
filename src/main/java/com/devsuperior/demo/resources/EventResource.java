@@ -16,8 +16,7 @@ public class EventResource {
 
     @PutMapping(value= "/{id}")
     public ResponseEntity<EventDTO> update (@PathVariable Long id, @RequestBody EventDTO dto){
-        dto= eventService.update(id, dto, dto.getCityId());
+        dto= eventService.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
-
 }
